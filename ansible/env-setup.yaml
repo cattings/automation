@@ -1,0 +1,53 @@
+---
+
+- name: update apt
+  action: shell apt-get update
+  # this would be appropriate if running from the acutal command line of the guest, the 'tags' section means --tags "build, <tag_2>, ..." would only run build, and any other CSV tag in the list when invoking on the command line via "ansible-playbook"
+  # tags:
+    # - build
+
+- name: Install required software defined OS packages for Evergrowing
+  action: apt pkg=$item state=installed
+  with_items:
+    - nginx
+    - zip
+    - gzip
+    - git
+    - wget
+    # - bridge-utils
+    # - module-assistant
+    #- linux-headers-generic-pae
+    # - python-zdaemon
+    # - kvm
+    # - dnsmasq
+  # tags: 
+  #  - build
+
+- name: Install Kernel-based Linux headers:
+  action: shell apt-get install -y linux-headers-$(uname -r)
+  ignore_errors: True
+  # tags:
+  #  - build
+
+
+
+
+
+
+
+
+
+# - name: Update apt cache
+#    update_cache: yes
+
+# - name: Update repositories cache and install "Sparkle Share" package
+#  apt:
+#    name: sparkleshare
+    # update_cache: yes
+#    installed: yes
+# - name: Update the repository cache and update package "nginx" to latest version NOT using default release squeeze-backport
+#  apt:
+#    name: nginx
+#    state: latest
+    # default_state: squeeze-backport
+    # update_cache: yes
